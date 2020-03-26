@@ -27,7 +27,6 @@ export default {
 	},
 	methods: {
 		subButton(){
-			console.log("subbutton");
 			this.displaySub = false;
 			this.displayThanks = true;
 			
@@ -42,7 +41,7 @@ export default {
 .footer{
 	background-color: #41B883;
 	padding: 1em;
-	margin-top:2em;
+	margin-top:4em;
 	
 }
 button{

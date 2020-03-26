@@ -1,7 +1,7 @@
 <template>
   <div>
 	<header>
-		<h1>{{ title }}</h1>
+		<h2>{{ title }}</h2>
 		<nav>
 			<ul>
 				<li><router-link to="/content">All Code Snippets</router-link></li>
@@ -31,14 +31,24 @@ export default {
 </script>
 
 <style scoped>
-header{
-	margin-bottom: 2em;
-}
+	h2{
+		text-align: start;
+		padding: 0.6em;
+		margin-left: 2em;
+	}
+	header{
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		margin-bottom: 4em;
+		background: #41B883;
+	}
 	ul{
+		display: inline-block;
 		list-style-type: none;
 		text-align: center;
 		margin: 0;	
 		padding: 0.5em;
+		
 	}
 	li{
 		display: inline-block;
@@ -47,13 +57,14 @@ header{
 	a{
 		color: #2c3e50;
 		text-decoration: none;
-		padding: 6px 8px;
+		padding: 0.5em;
 		/* border-radius: 4px; */
 	}
 	nav{
+		display: inline-block;
 		background: #41B883;
-		padding: 1em;
-		margin: 1em 0 1.3em;
+		grid-column: 3/3;
+		padding: 0.6em;
 	}
 	.router-link-active{
 		border-bottom: 2px solid #2c3e50;
