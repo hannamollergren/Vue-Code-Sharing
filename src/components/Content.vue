@@ -3,119 +3,74 @@
 		<h3>All Code Snippets</h3>
 
 		<button @click="latestButton">Latest</button> /
-		<button @click="highestButton">Highest ranked</button> /
+		<button @click="highestRankedButton">Highest ranked</button> /
 		<button @click="reportedButton">Reported</button>
 
-		<div class="snippet" v-for="snippet in snippets" :key="snippet.id">
-			<div class="containerSnippet">
-				<p class="item"><span>{{ snippet.title }}</span></p>
-				<p class="item" id="code">{{ snippet.content }}</p>
-			<!-- // se david exemple -->
-				<span>
-					<img src="../assets/clap.png" alt="clap icon" width="30px" height="30px" @click="likeButton(snippet.id)" class="like">
-					<p class="count">{{ likeCounter }}</p>
-				</span>
-				
+		<div v-if="latestSnippets == 'Loading content...'"><p>{{ latestSnippets }}</p></div>
+
+		<span v-if="latestSnippets != 'Loading content...'">
+			<div class="snippet" v-for="snippet in latestSnippets" :key="snippet.id">
+				<div class="containerSnippet">
+					<p class="item"><span>{{ snippet.title }}</span></p>
+					<p class="item" id="code">{{ snippet.content }}</p>
+				<!-- // se david exemple -->
+					<span>
+						<img src="../assets/clap.png" alt="clap icon" width="30px" height="30px" @click="likeButton(snippet.id)" class="like">
+						<p class="count">{{ likeCounter }}</p>
+					</span>
+					
+				</div>
 			</div>
-		</div>
+		</span>
   </div>
   
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 	Name: 'Content',
 	data: () => ({
-		snippets: [
-			{
-				id: "01",
-				title: "Header",
-				content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iure assumenda, minima cupiditate atque debitis eius veniam eos! Facere nesciunt quo dolorum in est quam eaque quia pariatur atque saepe."
-			},
-			{
-				id: "02",
-				title: "For loop",
-				content: "Test content1"
-			},
-			{
-				id: "03",
-				title: "Vue intro",
-				content: "Test content2"
-			},
-			{
-				id: "04",
-				title: "My awesome content",
-				content: "Test content3"
-			},
-			{
-				id: "05",
-				title: "Wow check this out",
-				content: "Test content4"
-			},
-			{
-				id: "06",
-				title: "Angular is better",
-				content: "Test content5"
-			},
-			{
-				id: "07",
-				title: "Header",
-				content: "Test content6"
-			},
-			{
-				id: "08",
-				title: "Hittat grymt bra hjälp ",
-				content: "Test content7"
-			},
-			{
-				id: "09",
-				title: "Ninja hjälpte mig med",
-				content: "Test content8"
-			},
-			{
-				id: "10",
-				title: "ternary operator JS",
-				content: "Test code9"
-			}
-		],
+		baseUrl: 'https://www.forverkliga.se/JavaScript/api/api-snippets.php',
+		latestSnippets: 'Loading content...',
 		likeCounter: 0,
-		
-
 	}),
 	props: {
 
 	},
-	methods: {
-			
+	methods: {		
 		latestButton(){
 			console.log("latestButton funkar");
+			this.getData();
 
 		},
-		highestButton(){
+		highestRankedButton(){
 			console.log(" highestButton funkar");
 
 		},
 		reportedButton(){
 			console.log("reportedButton funkar");
+			/* 	https://www.forverkliga.se/JavaScript/api/api-snippets.php?reported&id=42 */
 
 		},
 		likeButton(id){
 			console.log("likeButton", id);
 			this.likeCounter += 1;
+			/* 	https://www.forverkliga.se/JavaScript/api/api-snippets.php?upvote&id=42 */
 		},
 		getData(){
+			this.loading = ''
 			console.log("getData");
-			this.axios
+			axios
 			.get(this.baseUrl + '?latest')
-			.then(function (response){
-				this.snippets = response;
-				console.log("getData response:", response); 
+			.then((response) => {
+				this.latestSnippets = response.data; 
+				console.log("getData response:", this.latestSnippets); 
 			});
 		}
 	},
 		
 	created(){
-		console.log('Content comp i created');
 		this.getData();	 
 	}
 
@@ -126,9 +81,9 @@ export default {
 .snippet:nth-child(even){
 	background-color: lightgrey;
 }
-/* .snippet:hover{
-	background-color: rgb(240, 239, 239);
-} */
+.snippet{
+	margin-top: 1.5em;
+}
 p{
 	padding: 0;
 	margin: 0;
@@ -150,6 +105,8 @@ span{
 }
 #code{
 	margin-top: 1em;
+	font-weight: normal;
+
 }
 .like{
 	grid-column: 2/3;

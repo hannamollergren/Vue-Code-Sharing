@@ -3,25 +3,28 @@
 		<h3>Create Code Snippet</h3>
 
 		<div id="form-group">
-			<label>Topic</label>
-			<input type="text" placeholder="Please enter topic of you snippet" >
+			<label>Title</label>
+			<input type="text" placeholder="Please enter topic of you snippet" v-model="snippet.title">
 			<label>Your code</label>
-			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" >
+			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" v-model="snippet.content">
 			</textarea>
 			<button @click="submitButton">Add</button>
 		</div>
+		<br>
+		Snippet: {{ snippet }}
 		
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 	Name: 'Create',
 	data: () => ({
 		baseUrl: 'https://www.forverkliga.se/JavaScript/api/api-snippets.php',
-		title: String,
-		content: String,
-		newSnippet: Object
+		snippet: {title: '', content: ''},
+		test: '',
+		
 
 	}),
 	props: {
@@ -30,7 +33,11 @@ export default {
 	methods: {
 		submitButton(){
 			console.log("submitCode button funkar");
-		},
+			let test = axios
+			.post(this.baseUrl + '?add&title=' + this.snippet.title + '&content=' + this.snippet.title);
+			console.log("submittButton title:", this.snippet.title,'content:', this.snippet.content)
+			console.log('snippet object', test);
+		}
 	},
 	computed:{ 
 			
@@ -43,7 +50,6 @@ export default {
 	margin: 0 4em 0;
 	display: grid;
 }
-
 label{
 	display: block;
 	text-align: start;
