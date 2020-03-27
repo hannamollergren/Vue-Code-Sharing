@@ -4,13 +4,11 @@
 
 		<div id="form-group">
 			<label>Topic</label>
-			<input type="text" placeholder="Please enter topic of you snippet" @keyup="inputTitle">
-			<label>Devloper</label>
-			<input type="text" placeholder="Your firstname" @keyup="inputDeveloper">
+			<input type="text" placeholder="Please enter topic of you snippet" >
 			<label>Your code</label>
-			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" @keyup="inputCode">
+			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" >
 			</textarea>
-			<button @click="submitButton">Submit</button>
+			<button @click="submitButton">Add</button>
 		</div>
 		
   </div>
@@ -30,32 +28,14 @@ export default {
 
 	},
 	methods: {
-		inputTitle(event){
-			console.log("inputTitle", this.title);
-			
-			this.title = event.target.value;
-
-		},
-		inputDeveloper(event){
-			console.log("inputDev", this.developer);
-			
-			this.developer = event.target.value;
-			
-		},
-		inputCode(event){
-			console.log("inputCode", this.code);
-			this.code = event.target.value;
-		},
 		submitButton(){
 			console.log("submitCode button funkar");
 			this.newSnippet = { 	
 				id: '',
 				title: this.title,
 				developer: this.developer,
-				code: this.code
+				content: this.code
 			}
-			console.log("submitButton newsnipept", this.newSnippet);
-			
 		},
 	},
 	computed:{ 

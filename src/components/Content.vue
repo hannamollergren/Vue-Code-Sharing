@@ -9,10 +9,12 @@
 		<div class="snippet" v-for="snippet in snippets" :key="snippet.id">
 			<div class="containerSnippet">
 				<p class="item"><span>{{ snippet.title }}</span></p>
-				<p class="item"><span>{{ snippet.developer }}</span></p>
 				<p class="item" id="code">{{ snippet.content }}</p>
-
-				<span><img src="../assets/clap.png" alt="clap icon" width="30px" height="30px" @click="likeCounter += 1" class="like"><p class="count">{{ likeCounter }}</p></span>
+			<!-- // se david exemple -->
+				<span>
+					<img src="../assets/clap.png" alt="clap icon" width="30px" height="30px" @click="likeButton(snippet.id)" class="like">
+					<p class="count">{{ likeCounter }}</p>
+				</span>
 				
 			</div>
 		</div>
@@ -107,6 +109,10 @@ export default {
 		reportedButton(){
 			console.log("reportedButton funkar");
 
+		},
+		likeButton(id){
+			console.log("likeButton", id);
+			this.likeCounter += 1;
 		}
 		
 		
@@ -119,6 +125,9 @@ export default {
 .snippet:nth-child(even){
 	background-color: lightgrey;
 }
+/* .snippet:hover{
+	background-color: rgb(240, 239, 239);
+} */
 p{
 	padding: 0;
 	margin: 0;

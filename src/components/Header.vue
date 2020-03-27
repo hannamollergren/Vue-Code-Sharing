@@ -1,7 +1,7 @@
 <template>
   <div>
 	<header>
-		<h2>{{ title }}</h2>
+		<a href="/home" class="logo"><h2>{{ title }}</h2></a>
 		<nav>
 			<ul>
 				<li><router-link to="/content">All Code Snippets</router-link></li>
@@ -31,16 +31,20 @@ export default {
 </script>
 
 <style scoped>
-	h2{
-		text-align: start;
-		padding: 0.6em;
-		margin-left: 2em;
-	}
 	header{
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		margin-bottom: 4em;
 		background: #41B883;
+	}
+	h2{
+		text-align: start;
+		padding-top: 0.4em;
+		margin-left: 2em;
+		grid-column: 1/2;
+	}
+	.logo:hover{
+		border-bottom: none;
 	}
 	ul{
 		display: inline-block;
@@ -63,12 +67,31 @@ export default {
 	nav{
 		display: inline-block;
 		background: #41B883;
-		grid-column: 3/3;
-		padding: 0.6em;
+		grid-column: 2/3;
+		padding: 0.8em;
+		text-align: end;
+	}
+	a:hover{
+		border-bottom: 2px solid #2c3e50;
+		color: #2c3e50;
 	}
 	.router-link-active{
 		border-bottom: 2px solid #2c3e50;
 		color: #2c3e50;
 	}
+	/* //! TODO  */
+	@media only screen and (max-width: 902px) {
+	h2{
+		grid-column: 1/1;
+		margin-left: 1em;
+		font-size: 1.5em;
+	}
+	nav{
+		grid-column: 3/3;	
+	}
+}
+
+	
+
 
 </style>
