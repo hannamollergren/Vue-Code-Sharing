@@ -18,9 +18,9 @@
 export default {
 	Name: 'Create',
 	data: () => ({
+		baseUrl: 'https://www.forverkliga.se/JavaScript/api/api-snippets.php',
 		title: String,
-		developer: String,
-		code: String,
+		content: String,
 		newSnippet: Object
 
 	}),
@@ -30,12 +30,6 @@ export default {
 	methods: {
 		submitButton(){
 			console.log("submitCode button funkar");
-			this.newSnippet = { 	
-				id: '',
-				title: this.title,
-				developer: this.developer,
-				content: this.code
-			}
 		},
 	},
 	computed:{ 

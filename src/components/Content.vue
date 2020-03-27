@@ -27,65 +27,54 @@ export default {
 	Name: 'Content',
 	data: () => ({
 		snippets: [
-			/* [{"id":6,"title":"Hejsan","content":"Some content","tags":"tag1,tag2","score":0,"is_reported":0,"upload_dt":"2020-03-23 11:54:35"} */
 			{
 				id: "01",
 				title: "Header",
-				developer: "Hanna Andersson",
 				content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iure assumenda, minima cupiditate atque debitis eius veniam eos! Facere nesciunt quo dolorum in est quam eaque quia pariatur atque saepe."
 			},
 			{
 				id: "02",
 				title: "For loop",
-				developer: "Gustav Ek",
 				content: "Test content1"
 			},
 			{
 				id: "03",
 				title: "Vue intro",
-				developer: "Johan Hjert",
 				content: "Test content2"
 			},
 			{
 				id: "04",
 				title: "My awesome content",
-				developer: "Lisa",
 				content: "Test content3"
 			},
 			{
 				id: "05",
 				title: "Wow check this out",
-				developer: "Geoerge Smith",
 				content: "Test content4"
 			},
 			{
 				id: "06",
 				title: "Angular is better",
-				developer: "Isabell Karlsson",
 				content: "Test content5"
 			},
 			{
 				id: "07",
 				title: "Header",
-				developer: "Hanna Fraser",
 				content: "Test content6"
 			},
 			{
 				id: "08",
 				title: "Hittat grymt bra hjälp ",
-				developer: "Rebecka Johanson",
 				content: "Test content7"
 			},
 			{
 				id: "09",
-				title: "Ninja hjälpte mig med routerlinks",
-				developer: "Shaun White",
+				title: "Ninja hjälpte mig med",
 				content: "Test content8"
 			},
 			{
 				id: "10",
 				title: "ternary operator JS",
-				developer: "Calle Gustfsson",
 				content: "Test code9"
 			}
 		],
@@ -97,7 +86,7 @@ export default {
 
 	},
 	methods: {
-		/* https://forverkliga.se/JavaScript/api/api-snippets.php  */
+			
 		latestButton(){
 			console.log("latestButton funkar");
 
@@ -113,9 +102,21 @@ export default {
 		likeButton(id){
 			console.log("likeButton", id);
 			this.likeCounter += 1;
+		},
+		getData(){
+			console.log("getData");
+			this.axios
+			.get(this.baseUrl + '?latest')
+			.then(function (response){
+				this.snippets = response;
+				console.log("getData response:", response); 
+			});
 		}
+	},
 		
-		
+	created(){
+		console.log('Content comp i created');
+		this.getData();	 
 	}
 
 }
