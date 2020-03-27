@@ -62,7 +62,6 @@ export default {
 		color: #2c3e50;
 		text-decoration: none;
 		padding: 0.5em;
-		/* border-radius: 4px; */
 	}
 	nav{
 		display: inline-block;

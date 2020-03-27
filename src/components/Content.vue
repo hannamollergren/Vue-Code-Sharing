@@ -1,6 +1,6 @@
 <template>
   <div>
-		<h3>All Code Snippets</h3>
+		<h3>{{ title }}</h3>
 
 		<button @click="latestButton">Latest</button> /
 		<button @click="highestRankedButton">Highest ranked</button> /
@@ -31,6 +31,7 @@ import axios from 'axios'
 export default {
 	Name: 'Content',
 	data: () => ({
+		title: 'Latest Snippets',
 		baseUrl: 'https://www.forverkliga.se/JavaScript/api/api-snippets.php',
 		latestSnippets: 'Loading content...',
 		likeCounter: 0,
@@ -41,22 +42,27 @@ export default {
 	methods: {		
 		latestButton(){
 			console.log("latestButton funkar");
+			this.title = "Latest Snippets"
 			this.getData();
 
 		},
 		highestRankedButton(){
 			console.log(" highestButton funkar");
+			this.title = "Highest Ranked Snippets"
+		
 
 		},
 		reportedButton(){
 			console.log("reportedButton funkar");
+			this.title = "Reported Snippets"
 			/* 	https://www.forverkliga.se/JavaScript/api/api-snippets.php?reported&id=42 */
 
 		},
 		likeButton(id){
 			console.log("likeButton", id);
 			this.likeCounter += 1;
-			/* 	https://www.forverkliga.se/JavaScript/api/api-snippets.php?upvote&id=42 */
+				/* 	https://www.forverkliga.se/JavaScript/api/api-snippets.php?upvote&id=42 */
+			
 		},
 		getData(){
 			this.loading = ''

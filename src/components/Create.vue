@@ -4,14 +4,19 @@
 
 		<div id="form-group">
 			<label>Title</label>
-			<input type="text" placeholder="Please enter topic of you snippet" v-model="snippet.title">
+			<input type="text" placeholder="Please enter the title" v-model="snippet.title">
+
+			<span v-if="/*titleIsTouched &&*/ !titleIsValid" @blur.once="titleIsTouched = true">At least 5 characters please</span>
+				{{ titleIsTouched }}
+				{{ titleIsValid }}
+
 			<label>Your code</label>
 			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" v-model="snippet.content">
 			</textarea>
 			<button @click="submitButton">Add</button>
 		</div>
-		<br>
-		Snippet: {{ snippet }}
+		<div class="msg">{{ msg }}</div>
+		<br>Snippet: {{ snippet }}
 		
   </div>
 </template>
@@ -23,7 +28,8 @@ export default {
 	data: () => ({
 		baseUrl: 'https://www.forverkliga.se/JavaScript/api/api-snippets.php',
 		snippet: {title: '', content: ''},
-		test: '',
+		msg: '',
+		titleIsTouched: false,
 		
 
 	}),
@@ -32,14 +38,31 @@ export default {
 	},
 	methods: {
 		submitButton(){
-			console.log("submitCode button funkar");
-			let test = axios
-			.post(this.baseUrl + '?add&title=' + this.snippet.title + '&content=' + this.snippet.title);
-			console.log("submittButton title:", this.snippet.title,'content:', this.snippet.content)
-			console.log('snippet object', test);
+			this.msg = "Adding..."
+			
+			axios
+				.post(this.baseUrl + '?add&title=' + this.snippet.title + '&content=' + this.snippet.title) 
+				.then((response) => {
+					console.log('response', response)
+					this.msg = "Snippet added succsessfully, thank you!"
+				})
+				.catch((error) => {
+					this.msg = 'Failed to add snippet, please try again';
+					this.error = true;
+					console.log(error);
+				})
+				console.log('title', this.snippet.title, 'content', this.snippet.content)
+
+				console.log(this.baseUrl + '?add&title=' + this.snippet.title + '&content=' + this.snippet.title);
+
+				this.snippet.title = '';
+				this.snippet.content = '';
 		}
 	},
 	computed:{ 
+		titleIsValid(){
+			return this.snippet.title.length >= 5;
+		}
 			
 	}
 }
@@ -74,6 +97,11 @@ button:hover{
 	background-color: #3c546b;
 	transition: 0.6s;
 }
+.msg{ 
+	display: inline-block;
+	margin-top: 1.5em;
+}
+
 
 
 </style>
