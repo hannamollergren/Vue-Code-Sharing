@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <section class="container">
 		<h3>{{ title }}</h3>
 
-		<button @click="latest">Latest</button> /
-		<button @click="highestRanked">Highest ranked</button> /
-		<button @click="reported">Reported</button>
+	<span class="button-container">
+		<button @click="getLatest" class="button">Latest</button> /
+		<button @click="getHighestRanked" class="button">Highest ranked</button> /
+		<button @click="getReported" class="button">Reported</button>
+	</span>
 
 		
 		<div v-if="latestSnippets == 'Loading content...'"><p>{{ latestSnippets }}</p></div>
@@ -60,7 +62,7 @@
 				</div>
 			</span>
 		</section>
-  </div>
+  </section>
   
 </template>
 
@@ -83,23 +85,21 @@ export default {
 
 	},
 	methods: {	
-		getData(){
+		getLatest(){ 
+			this.title = "Latest Snippets"
+			
+			this.displayLatest = true;
+			this.displayHighest = false;
+			this.displayReported = false;
+			
 			axios
 			.get(this.baseUrl + '?latest')
 			.then((response) => {
 				this.latestSnippets = response.data; 
 				console.log("getData response:", this.latestSnippets); 
 			});
-		},	
-		latest(){ 
-			this.title = "Latest Snippets"
-			
-			this.displayLatest = true;
-			this.displayHighest = false;
-			this.displayReported = false;
-			this.getData();
 		},
-		highestRanked(){
+		getHighestRanked(){
 			this.title = "Highest Ranked Snippets"
 
 			this.displayHighest = true;
@@ -113,37 +113,31 @@ export default {
 				console.log("highestranked response:", this.highestRankedSnippets); 
 			});
 		},
-		reported(){
+		getReported(){
 			this.title = "Reported Snippets"
 
 			this.displayReported = true;
 			this.displayLatest = false;
 			this.displayHighest = false;
 			
-
 			axios
 			.get(this.baseUrl + '?reported')
 			.then((response) => {
 				this.reportedSnippets = response.data; 
 				console.log("reportedSnippets response:", this.reportedSnippets); 
 			});
-			
-
-			
-
 		},
 		likeButton(id){
 			console.log("likeButton id", id);
-	
+
 			fetch(this.baseUrl, {
                         method: 'POST',
 						body: new URLSearchParams('upvote&id=' + id)
                     })
                     .then((response) => {
 						console.log('response', response)
-                    })
+					})
 		},
-		//! Ändra innehåller när rapporterad
 		reportButton(id){
 			console.log("reportedButton id", id)
 				fetch(this.baseUrl, {
@@ -153,9 +147,9 @@ export default {
                     .then((response) => {
 						console.log('response reportButton', response)
 					})
-			this.getData();
+			this.getLatest();
 		},
-		restoreSnippet(id){ //!FUNKAR EJ
+		restoreSnippet(id){ 
 			console.log('restore', id);
 				fetch(this.baseUrl, {
                         method: 'POST',
@@ -164,10 +158,10 @@ export default {
                     .then((response) => {
 						console.log('response restoreSnippet', response)
 					})
-			this.reported();
-
+			this.getReported();
 		},
 		deleteSnippet(id){
+			
 			console.log('delete', id);
 			fetch(this.baseUrl, {
                         method: 'POST',
@@ -176,14 +170,11 @@ export default {
                     .then((response) => {
 						console.log('response deletesnippet', response)
 					})
-			
-			this.reported();
-
-		}
-			
+			this.getReported();
+		}		
 	},	
 	created(){
-		this.getData();	 
+		this.getLatest();	 
 	}
 }
 </script>
@@ -241,6 +232,10 @@ button{
 	color: white;
 	background: #2c3e50;
 }
+button:hover{
+	background-color: #3c546b;
+	transition: 0.6s;
+}
 .restore-delete{
 	margin-left: 1em;
 	border: 2px solid #2c3e50;
@@ -251,6 +246,18 @@ button{
 .buttonsReported{
 	grid-column: 2/3;
 	grid-row: 1;
+
+}
+.container{
+	padding-bottom: 4em;
+}
+@media only screen and (max-width: 450px) {
+	.button-container{
+		display: grid;
+	}
+	.button{
+		margin: 0 2em 0;
+	}
 
 }
 

@@ -43,10 +43,10 @@ export default {
 .footer{
 	background-color: #41B883;
 	padding: 1em;
-	margin-top: 4em;
 	bottom: 0;
 	position: fixed;
-	width: 100%;         
+	width: 100%;  
+/* 	margin: 4em 0 0;  */      
 }
 button{
 	padding: 0.5em;
@@ -55,7 +55,8 @@ button{
 	background: #41B883;
 }
 button:hover{
-	font-weight: bolder;
+	background-color: rgb(62, 175, 124);
+	transition: 0.6s;
 }
 label{
 	margin-right: 0.5em;

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+	<div class="content-container">
 		<Header/>
 		<router-view/> 
+	</div>
 		<Footer/>
   </div>
 </template>
@@ -41,6 +43,9 @@ p{
 }
 h3{
 	margin: 0 0 1em;
+}
+.content-container{
+	padding-bottom: 4em; 
 }
 
 

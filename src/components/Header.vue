@@ -79,18 +79,7 @@ export default {
 		color: #2c3e50;
 	}
 	/* //! TODO  */
-	@media only screen and (max-width: 902px) {
-	h2{
-		grid-column: 1/1;
-		margin-left: 1em;
-		font-size: 1.5em;
-	}
-	nav{
-		grid-column: 3/3;	
-	}
-}
-
+	@media only screen and (max-width: 837px) {
 	
-
-
+}
 </style>

@@ -6,12 +6,14 @@
 			<label>Title</label>
 			<input type="text" placeholder="Please enter the title" v-model="snippet.title" @blur.once="titleIsTouched=true">
 
-			<span v-if="!titleIsValid && titleIsTouched" class="error">Must enter five characters or more</span>
+			<span v-if="!titleIsValid && titleIsTouched" class="error">Enter five characters or more</span>
 
 			<label>Your code</label>
 			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" v-model="snippet.content" @blur.once="contentIsTouched=true">
 			</textarea>
+
 			<span v-if="!contentIsValid && contentIsTouched" class="error">Please enter your code in the textarea</span>
+
 			<button @click="submitButton" :disabled="!titleIsValid && !contentIsValid">Add</button>
 		</div>
 		<div class="msg">{{ msg }}</div>	
@@ -27,9 +29,6 @@ export default {
 		msg: '',
 		titleIsTouched: false,
 		contentIsTouched: false
-	
-		
-
 	}),
 	props: {
 
@@ -47,8 +46,10 @@ export default {
                     .then((response) => {
                        this.msg = "Snippet added succsessfully, thank you!"
 						console.log('response', response)
-                    })
-			
+					})
+			/* this.snippet.title = ''; 
+			this.snippet.content = ''; 
+			 */
 		/* 	axios
 				.post(this.baseUrl + '?add&title=' + title + '&content=' + content + '&tags=mySuperCoolTag')
 				.then((response) => {
@@ -73,11 +74,7 @@ export default {
 		},
 		contentIsValid(){
 			return this.snippet.title.length >= 5;
-		},
-	
-		
-
-			
+		},			
 	}
 }
 </script>
@@ -86,21 +83,33 @@ export default {
 #form-group{
 	margin: 0 4em 0;
 	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 }
 label{
 	display: block;
 	text-align: start;
+	grid-column: 1/3;
 }
 input{
+	display: inline-block;
 	width: 100%;
 	margin: 0 0 1em;
 	padding: 0.5em;
+	border: 1px solid lightgrey;
+	grid-column: 1/3;
 	
 }
 textarea{
 	width: 100%;
 	padding: 0.5em;
-
+	border: 1px solid lightgrey;
+	grid-column: 1/3;
+}
+.error{
+	margin: 0 0 0 1em;
+	color:rgba(255, 0, 0, 0.89);
+	grid-column: 3/4;
+	text-align: left;
 }
 button{
 	margin-top: 1em;
@@ -108,6 +117,7 @@ button{
 	padding: 0.5em;
 	color: white;
 	background: #2c3e50;
+	grid-column: 1/3;
 }
 button:hover{
 	background-color: #3c546b;
@@ -117,16 +127,18 @@ button:hover{
 	display: inline-block;
 	margin-top: 1.5em;
 }
-.error{
-	margin: 0.5em 0 0;
-	color:red;
-}
+
 
 button:disabled{
 	background-color: lightgrey;
 	cursor: auto;
 	border: none;
-	}
+}
+@media only screen and (max-width: 450px) {
+#form-group{
+	margin: 0 2em 0;
+}
+}
 
 
 
