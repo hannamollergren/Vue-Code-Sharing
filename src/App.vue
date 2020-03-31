@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-	<Header/>
-	<router-view/> 
-	<Footer/>
+		<Header/>
+		<router-view/> 
+		<Footer/>
   </div>
 </template>
 
@@ -42,5 +42,7 @@ p{
 h3{
 	margin: 0 0 1em;
 }
+
+
 
 </style>

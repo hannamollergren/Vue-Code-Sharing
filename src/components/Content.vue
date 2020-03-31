@@ -148,33 +148,36 @@ export default {
 			console.log("reportedButton id", id)
 				fetch(this.baseUrl, {
                         method: 'POST',
-						body: new URLSearchParams('report' + id)
+						body: new URLSearchParams('report&id=' + id)
                     })
                     .then((response) => {
 						console.log('response reportButton', response)
-                    })
+					})
+			this.getData();
 		},
 		restoreSnippet(id){ //!FUNKAR EJ
 			console.log('restore', id);
 				fetch(this.baseUrl, {
                         method: 'POST',
-						body: new URLSearchParams('unreport' + id)
+						body: new URLSearchParams('unreport&id=' + id)
                     })
                     .then((response) => {
 						console.log('response restoreSnippet', response)
-                    })
+					})
+			this.reported();
 
 		},
 		deleteSnippet(id){
 			console.log('delete', id);
 			fetch(this.baseUrl, {
                         method: 'POST',
-						body: new URLSearchParams('delete' + id)
+						body: new URLSearchParams('delete&id=' + id)
                     })
                     .then((response) => {
 						console.log('response deletesnippet', response)
-                    })
-
+					})
+			
+			this.reported();
 
 		}
 			

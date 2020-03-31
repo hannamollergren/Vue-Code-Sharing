@@ -9,7 +9,6 @@
 		<div v-if="displayThanks">
 			<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>
 		</div>
-
   </div>
 </template>
 
@@ -18,7 +17,9 @@ export default {
 	Name: 'Footer',
 	data: () => ({
 		displaySub: Boolean(true),
-		displayThanks: Boolean(false)
+		displayThanks: Boolean(false),
+		email: String,
+		emailIsTouched: Boolean(false)
 
 
 	}),
@@ -28,10 +29,11 @@ export default {
 	methods: {
 		subButton(){
 			this.displaySub = false;
-			this.displayThanks = true;
-			
-		}
-		
+			this.displayThanks = true;		
+		},
+	},
+	computed: {
+
 	}
 
 }
@@ -41,8 +43,10 @@ export default {
 .footer{
 	background-color: #41B883;
 	padding: 1em;
-	margin-top:4em;
-	
+	margin-top: 4em;
+	bottom: 0;
+	position: fixed;
+	width: 100%;         
 }
 button{
 	padding: 0.5em;
@@ -60,6 +64,10 @@ input{
 	width: 30%;
 	margin-right: 0.5em;
 	padding: 0.5em
+}
+button:disabled{
+	font-weight: normal;
+
 }
 
 
