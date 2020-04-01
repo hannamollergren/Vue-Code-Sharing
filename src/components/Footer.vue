@@ -1,11 +1,11 @@
 <template>
   <div class="footer">
-
 		<div v-if="displaySub">
 			<label>Subscribe now</label>
-			<input type="text" placeholder="Your email"/>
-			<button @click="subButton">Send</button>
+			<input type="text" placeholder="Your email" @keyup="emailInput" @blur.once="emailIsTouched=true"/>
+			<button @click="subButton" :disabled="!formIsValid">Send</button>
 		</div>
+
 		<div v-if="displayThanks">
 			<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>
 		</div>
@@ -19,7 +19,7 @@ export default {
 		displaySub: Boolean(true),
 		displayThanks: Boolean(false),
 		email: String,
-		emailIsTouched: Boolean(false)
+		emailIsTouched: false
 
 
 	}),
@@ -28,12 +28,24 @@ export default {
 	},
 	methods: {
 		subButton(){
+			console.log('subButton');
+			
 			this.displaySub = false;
 			this.displayThanks = true;		
 		},
+		emailInput(event){
+			this.email = event.target.value;
+
+		}
 	},
 	computed: {
-
+		emailIsValid() {
+			const email = this.email;
+			return email.length > 3 /* && email.includes('@') */;
+		},
+		formIsValid() {
+			return this.emailIsValid || this.emailIsTouched;
+		}
 	}
 
 }
@@ -50,13 +62,9 @@ export default {
 }
 button{
 	padding: 0.5em;
-	border: 1px solid ;
+	border: 1px solid #2c3e50;
 	color: #2c3e50;
 	background: #41B883;
-}
-button:hover{
-	background-color: rgb(62, 175, 124);
-	transition: 0.6s;
 }
 label{
 	margin-right: 0.5em;
@@ -66,9 +74,12 @@ input{
 	margin-right: 0.5em;
 	padding: 0.5em
 }
+p{
+	margin: 0;
+	padding: 0.25em;
+}
 button:disabled{
-	font-weight: normal;
-
+	cursor: auto;
 }
 
 

@@ -3,9 +3,9 @@
 		<h3>{{ title }}</h3>
 
 	<span class="button-container">
-		<button @click="getLatest" class="button">Latest</button> /
-		<button @click="getHighestRanked" class="button">Highest ranked</button> /
-		<button @click="getReported" class="button">Reported</button>
+		<button @click="getLatest" class="button" :disabled="title == 'Latest Snippets'">Latest</button> /
+		<button @click="getHighestRanked" class="button" :disabled="title == 'Highest Ranked Snippets'">Highest ranked</button> /
+		<button @click="getReported" class="button" :disabled="title == 'Reported Snippets'">Reported</button>
 	</span>
 
 		
@@ -35,10 +35,9 @@
 			<span v-if="highestRankedSnippets != 'Loading content...'">
 				<div v-for="score in highestRankedSnippets" :key="score.id" class="snippet">
 					<div class="containerSnippet">
-					<p class="item"><span>{{ score.title }}</span></p>
-					<p class="item" id="code">{{ score.content }}</p>
-					<p class="item" id="code">Score: {{ score.score }}</p>
-
+						<p class="item"><span>{{ score.title }}</span></p>
+						<p class="item" id="code">{{ score.content }}</p>
+						<p class="item" id="code">Score: {{ score.score }}</p>
 					</div>
 				</div>
 			</span>
@@ -51,9 +50,9 @@
 			<span v-if="reportedSnippets != 'Loading content...'">
 				<div v-for="reported in reportedSnippets" :key="reported.id" class="snippet">
 					<div class="containerSnippet">
-					<p class="item"><span>{{ reported.title }}</span></p>
-					<p class="item" id="code">{{ reported.content }}</p>
-					<p class="item" id="code">Score: {{ reported.score }}</p>
+						<p class="item"><span>{{ reported.title }}</span></p>
+						<p class="item" id="code">{{ reported.content }}</p>
+						<p class="item" id="code">Score: {{ reported.score }}</p>
 					<span class="buttonsReported">
 						<button class="restore-delete" @click="restoreSnippet(reported.id)">Restore</button>
 						<button class="restore-delete" @click="deleteSnippet(reported.id)">X</button>
@@ -80,96 +79,121 @@ export default {
 		displayLatest: Boolean (true),
 		displayHighest: Boolean(false),
 		displayReported: Boolean(false),
+		score: Number,
 	}),
 	props: {
 
 	},
 	methods: {	
-		getLatest(){ 
+		async getLatest(){ 
 			this.title = "Latest Snippets"
 			
 			this.displayLatest = true;
 			this.displayHighest = false;
 			this.displayReported = false;
 			
-			axios
-			.get(this.baseUrl + '?latest')
-			.then((response) => {
-				this.latestSnippets = response.data; 
-				console.log("getData response:", this.latestSnippets); 
-			});
-		},
-		getHighestRanked(){
+			try {
+				let response = await axios
+				.get(this.baseUrl + "?latest", {
+					
+                });
+				this.latestSnippets = response.data;
+            }
+            catch(error) {
+				console.log('Something went wrong', error);
+			}
+		}, 
+		async getHighestRanked(){
 			this.title = "Highest Ranked Snippets"
 
 			this.displayHighest = true;
 			this.displayLatest = false;
 			this.displayReported = false;
 			
-			axios
-			.get(this.baseUrl + '?best')
-			.then((response) => {
-				this.highestRankedSnippets = response.data; 
-				console.log("highestranked response:", this.highestRankedSnippets); 
-			});
+			try {
+				let response = await axios
+				.get(this.baseUrl + "?best", {
+					
+                });
+				this.highestRankedSnippets = response.data;
+            }
+            catch(error) {
+				console.log('Something went wrong', error);
+			}
 		},
-		getReported(){
+		async getReported(){
 			this.title = "Reported Snippets"
 
 			this.displayReported = true;
 			this.displayLatest = false;
 			this.displayHighest = false;
 			
-			axios
-			.get(this.baseUrl + '?reported')
-			.then((response) => {
-				this.reportedSnippets = response.data; 
-				console.log("reportedSnippets response:", this.reportedSnippets); 
-			});
+			try {
+				let response = await axios
+				.get(this.baseUrl + "?reported", {
+					
+                });
+				this.reportedSnippets = response.data;
+            }
+            catch(error) {
+				console.log('Something went wrong', error);
+			}
 		},
 		likeButton(id){
-			console.log("likeButton id", id);
-
 			fetch(this.baseUrl, {
-                        method: 'POST',
-						body: new URLSearchParams('upvote&id=' + id)
-                    })
-                    .then((response) => {
-						console.log('response', response)
-					})
+				method: 'POST',
+				body: new URLSearchParams('upvote&id=' + id)
+			})
+			.then((response) => {
+				console.log('response', response)
+			})
+			.catch((error) => {
+				console.log('Something went wrong', error);
+				
+			})
+			this.getLatest();
+			
 		},
-		reportButton(id){
-			console.log("reportedButton id", id)
-				fetch(this.baseUrl, {
-                        method: 'POST',
-						body: new URLSearchParams('report&id=' + id)
-                    })
-                    .then((response) => {
-						console.log('response reportButton', response)
-					})
+		reportButton(id){ 
+			fetch(this.baseUrl, {
+				method: 'POST',
+				body: new URLSearchParams('report&id=' + id)
+			})
+			.then((response) => {
+				console.log('response reportButton', response)
+			})
+			.catch((error) => {
+				console.log('Something went wrong', error);
+				
+			})
 			this.getLatest();
 		},
 		restoreSnippet(id){ 
-			console.log('restore', id);
-				fetch(this.baseUrl, {
-                        method: 'POST',
-						body: new URLSearchParams('unreport&id=' + id)
-                    })
-                    .then((response) => {
-						console.log('response restoreSnippet', response)
-					})
+			fetch(this.baseUrl, {
+				method: 'POST',
+				body: new URLSearchParams('unreport&id=' + id)
+			})
+			.then((response) => {
+				console.log('response restoreSnippet', response)
+			})
+			.catch((error) => {
+				console.log('Something went wrong', error);
+				
+			})
 			this.getReported();
 		},
 		deleteSnippet(id){
-			
-			console.log('delete', id);
 			fetch(this.baseUrl, {
-                        method: 'POST',
-						body: new URLSearchParams('delete&id=' + id)
-                    })
-                    .then((response) => {
-						console.log('response deletesnippet', response)
-					})
+				method: 'POST',
+				body: new URLSearchParams('delete&id=' + id)
+			})
+			.then((response) => {
+				console.log('response deletesnippet', response)
+			})
+			.catch((error) => {
+				console.log('Something went wrong', error);
+				
+			})
 			this.getReported();
 		}		
 	},	
@@ -232,9 +256,8 @@ button{
 	color: white;
 	background: #2c3e50;
 }
-button:hover{
-	background-color: #3c546b;
-	transition: 0.6s;
+button:disabled{
+	cursor: auto;
 }
 .restore-delete{
 	margin-left: 1em;

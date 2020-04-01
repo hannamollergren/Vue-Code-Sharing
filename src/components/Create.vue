@@ -4,23 +4,28 @@
 
 		<div id="form-group">
 			<label>Title</label>
-			<input type="text" placeholder="Please enter the title" v-model="snippet.title" @blur.once="titleIsTouched=true">
+			<input type="text" placeholder="Enter title" v-model="snippet.title" :class="titleClass" @blur.once="titleIsTouched=true">
 
-			<span v-if="!titleIsValid && titleIsTouched" class="error">Enter five characters or more</span>
+			<span v-if="titleIsTouched && !titleIsValid" class="error">Enter at least 3 characters</span>
+			<span v-if="titleIsValid" class="good">Looking good</span>
+			
 
 			<label>Your code</label>
-			<textarea id="codeSnippet" rows="20" cols="135" placeholder="Paste your code into textarea" v-model="snippet.content" @blur.once="contentIsTouched=true">
-			</textarea>
+			<textarea id="codeSnippet" rows="15" placeholder="Paste your code into textarea" v-model="snippet.content" :class="contentClass" @blur.once="contentIsTouched=true" ></textarea>
+			
 
-			<span v-if="!contentIsValid && contentIsTouched" class="error">Please enter your code in the textarea</span>
+			<span v-if="!contentIsValid && contentIsTouched" class="error">Enter your code in the textarea</span>
+			<span v-if="contentIsValid" class="good">Well done</span>
 
-			<button @click="submitButton" :disabled="!titleIsValid && !contentIsValid">Add</button>
+			<button @click="submitButton" :disabled="!formIsValid">Add</button>
+
+			<div class="msg">{{ msg }}</div>
 		</div>
-		<div class="msg">{{ msg }}</div>	
   </div>
 </template>
 
 <script>
+/* import axios from 'axios' */
 export default {
 	Name: 'Create',
 	data: () => ({
@@ -36,45 +41,56 @@ export default {
 	methods: {
 		submitButton(){
 			this.msg = "Adding..."
-			let title = this.snippet.title;
-			let content = this.snippet.content;
-
+		
 			fetch(this.baseUrl, {
-                        method: 'POST',
-						body: new URLSearchParams('add&title=' + title + '&content=' + content + '&tags=mysupercooltag')
-                    })
-                    .then((response) => {
-                       this.msg = "Snippet added succsessfully, thank you!"
-						console.log('response', response)
-					})
-			/* this.snippet.title = ''; 
-			this.snippet.content = ''; 
-			 */
-		/* 	axios
-				.post(this.baseUrl + '?add&title=' + title + '&content=' + content + '&tags=mySuperCoolTag')
+				method: 'POST',
+				body: new URLSearchParams('add&title=' + this.snippet.title + '&content=' + this.snippet.content + '&tags=mysupercooltag')
+				})
 				.then((response) => {
 					this.msg = "Snippet added succsessfully, thank you!"
 					console.log('response', response)
 				})
 				.catch((error) => {
-					this.msg = 'Failed to add snippet, please try again';
-					console.log(error);
+					this.msg = error + '. Please try again';
 				})
-				console.log('title', title, 'content', content)
+		},
+		/* async submitButton(){
+			this.msg = "Adding..."
 
-				console.log(this.baseUrl + '?add&title=' + title + '&content=' + content); */
+			try {
+				let response = await axios
+				.post(this.baseUrl + "?add&", {
+					params: { 
+                        title: this.snippet.title,
+                        content: this.snippet.content
+                         }
+                });
+                console.log('submitbutton', response);
+            }
+            catch(error) {
+				console.log('Something went wrong', error);
+			}
+		} */
 
-				/* this.snippet.title = ''; Tömmer input fält
-				this.snippet.content = ''; */
-		}
-	},
+        },
 	computed:{ 
 		titleIsValid(){
-			return this.snippet.title.length >= 5;
+			return this.snippet.title.length >= 3;
 		},
-		contentIsValid(){
-			return this.snippet.title.length >= 5;
-		},			
+		titleClass() {
+			if( !this.titleIsTouched ) return '';
+			return this.titleIsValid ? 'valid' : 'invalid';
+		},
+		contentIsValid(){			
+			return this.snippet.content.length >= 5;
+		},		
+		contentClass() {
+			if( !this.contentIsTouched ) return '';
+			return this.contentIsValid ? 'valid' : 'invalid';
+		},	
+		formIsValid() {
+			return this.titleIsValid && this.contentIsValid;
+		}
 	}
 }
 </script>
@@ -97,7 +113,6 @@ input{
 	padding: 0.5em;
 	border: 1px solid lightgrey;
 	grid-column: 1/3;
-	
 }
 textarea{
 	width: 100%;
@@ -111,6 +126,17 @@ textarea{
 	grid-column: 3/4;
 	text-align: left;
 }
+.good{
+	margin: 0 0 0 1em;
+	color:green;
+	grid-column: 3/4;
+	text-align: left;
+}
+
+input.valid { border-color: green; }
+input.invalid { border-color: rgba(255, 0, 0, 0.89); }
+textarea.valid { border-color: green; }
+textarea.invalid { border-color: rgba(255, 0, 0, 0.89); }
 button{
 	margin-top: 1em;
 	width: 100%;
@@ -123,17 +149,18 @@ button:hover{
 	background-color: #3c546b;
 	transition: 0.6s;
 }
-.msg{ 
-	display: inline-block;
-	margin-top: 1.5em;
-}
-
-
 button:disabled{
 	background-color: lightgrey;
 	cursor: auto;
 	border: none;
 }
+.msg{ 
+	display: inline-block;
+	margin: 1.5em 0 3em;
+	grid-column: 1/1;
+	text-align: left;
+}
+
 @media only screen and (max-width: 450px) {
 #form-group{
 	margin: 0 2em 0;

@@ -5,7 +5,7 @@
 			<div class="code">
 				<h1 class="love">I LOVE CODE.</h1>
 				<p class="text">Check out the latest code snippets</p> <br>
-				<button><a href="/home#/content">Latest snippets</a></button>
+				<button @click="toLatest"><a href="/home#/content">{{ latestSnippets }}</a></button>
 			</div> 
 
 			<div class="rules">
@@ -17,14 +17,7 @@
 			<div class="info">
 				<h3 class="title">About</h3>
 				<p class="undertitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tempore ad sapiente nesciunt cum officia quo soluta dolorem doloribus! Nulla ex repellendus, laboriosam distinctio excepturi veritatis quidem vel laudantium fuga.</p>
-
-
 			</div>
-
-		
-		
-		
-
 		</div>
 	</div>
 </template>
@@ -33,12 +26,17 @@
 export default {
 	Name: 'Home',
 	data: () => ({
+		latestSnippets: 'Latest snippets',
 
 	}),
 	props: {
 
 	},
 	methods: {
+		toLatest(){
+			this.latestSnippets = 'Loading content...'
+
+		}
 		
 	}
 
@@ -53,7 +51,7 @@ span{
 .content-container{
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	margin: 0 3em 0;
+	margin: 0 0 0;
 	gap: 1em;
 }
 
@@ -61,17 +59,20 @@ span{
 .code{
 	background: lightgrey;
 	grid-column: 1/4;
+	
 }
 .rules{
-	border: 2px solid #2c3e50;
+	background-color:lightgrey;
 	padding: 2em;
 	text-align: left;
 	grid-column: 1/2;
+	margin: 0 0 0 4em;
 
 }
 .info{
 	grid-column: 2/4;
-	border: 2px solid #2c3e50;
+	background-color:lightgrey;
+	margin: 0 4em 0 0;
 }
 .title{
 	padding: 1em 0 0;
@@ -87,7 +88,7 @@ p{
 	padding:1em;
 	font-size: 4em;
 	font-weight: bold;
-	line-height: 1.2em;
+	line-height: 2em;
 }
 
 button{
