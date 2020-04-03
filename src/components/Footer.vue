@@ -1,14 +1,14 @@
 <template>
   <div class="footer">
-		<div v-if="displaySub">
-			<label>Subscribe now</label>
-			<input type="text" placeholder="Your email" @keyup="emailInput" @blur.once="emailIsTouched=true"/>
-			<button @click="subButton" :disabled="!formIsValid">Send</button>
-		</div>
+	<div v-if="displaySub">
+		<label>Subscribe now</label>
+		<input type="text" placeholder="Your email" @keyup="emailInput" @blur.once="emailIsTouched=true"/>
+		<button @click="subButton" :disabled="!formIsValid">Send</button>
+	</div>
 
-		<div v-if="displayThanks">
-			<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>
-		</div>
+	<div v-if="displayThanks">
+		<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>
+	</div>
   </div>
 </template>
 
