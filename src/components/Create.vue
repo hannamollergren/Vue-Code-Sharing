@@ -25,7 +25,7 @@
 </template>
 
 <script>
-/* import axios from 'axios' */
+import axios from 'axios'
 export default {
 	Name: 'Create',
 	data: () => ({
@@ -33,46 +33,31 @@ export default {
 		snippet: {title: '', content: ''},
 		msg: '',
 		titleIsTouched: false,
-		contentIsTouched: false
+		contentIsTouched: false,
 	}),
 	props: {
 
 	},
 	methods: {
-		submitButton(){
-			this.msg = "Adding..."
-		
-			fetch(this.baseUrl, {
-				method: 'POST',
-				body: new URLSearchParams('add&title=' + this.snippet.title + '&content=' + this.snippet.content + '&tags=mysupercooltag')
-				})
-				.then((response) => {
-					this.msg = "Snippet added succsessfully, thank you!"
-					console.log('response', response)
-				})
-				.catch((error) => {
-					this.msg = error + '. Please try again';
-				})
-		},
-		/* async submitButton(){
-			this.msg = "Adding..."
+		async submitButton(){
+		this.msg = "Adding..."
 
-			try {
-				let response = await axios
-				.post(this.baseUrl + "?add&", {
-					params: { 
-                        title: this.snippet.title,
-                        content: this.snippet.content
-                         }
-                });
-                console.log('submitbutton', response);
-            }
-            catch(error) {
-				console.log('Something went wrong', error);
+		try{
+			await axios
+			.post(this.baseUrl,
+			{
+				add: "",
+				title: this.snippet.title,
+				content: this.snippet.content,
+				tags: 'tag',
+			});
+			this.msg = "Snippet added succsessfully, thank you!"	
+		}
+		catch(error){
+			this.msg = error, '. Try again!';
 			}
-		} */
-
-        },
+		}
+		}, 
 	computed:{ 
 		titleIsValid(){
 			return this.snippet.title.length >= 3;
@@ -157,13 +142,13 @@ button:disabled{
 .msg{ 
 	display: inline-block;
 	margin: 1.5em 0 3em;
-	grid-column: 1/1;
+	grid-column: 1/2;
 	text-align: left;
 }
 
 @media only screen and (max-width: 450px) {
 #form-group{
-	margin: 0 2em 0;
+	margin: 0 2em 4em;
 }
 }
 

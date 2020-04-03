@@ -81,6 +81,26 @@ p{
 button:disabled{
 	cursor: auto;
 }
+@media only screen and (max-width: 450px) {
+	.footer{
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+	}
+	div{
+		grid-column: 1/2;
+	}
+	button{
+		margin-top: 0.8em;
+		width: 100%;
+		
+	}
+	input{
+		margin-top: 1em;
+		display: block;
+		width: 100%;
+	}
+
+}
 
 
 </style>

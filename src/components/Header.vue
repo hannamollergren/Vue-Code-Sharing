@@ -37,9 +37,9 @@ export default {
 		margin-bottom: 4em;
 		background: #41B883;
 	}
-	h2{
+	.logo{
 		text-align: start;
-		padding-top: 0.4em;
+		padding-top: 1em;
 		margin-left: 2em;
 		grid-column: 1/2;
 	}
@@ -78,8 +78,34 @@ export default {
 		border-bottom: 2px solid #2c3e50;
 		color: #2c3e50;
 	}
-	/* //! TODO  */
-	@media only screen and (max-width: 837px) {
 	
+	@media only screen and (max-width: 702px) {
+	header{
+		grid-template-columns: 1fr 3fr 1fr;
+		grid-template-rows: 2;
+	}
+	.logo{
+		grid-column: 2/2;
+		grid-row: 1;
+		text-align: center;
+		display: block;
+		margin: 1em 0 0;
+	}
+	nav{
+		margin: 0;
+		padding: 0em 1em 1em;
+		text-align: center;
+		grid-column: 2/2;
+		grid-row: 2;
+	}
+	ul{
+		margin: 0;
+		padding: 0;
+	}
+}
+	@media only screen and (max-width: 702px) {
+	li{
+		padding: 0.5em;
+	}
 }
 </style>

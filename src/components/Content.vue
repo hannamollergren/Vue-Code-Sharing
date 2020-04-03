@@ -113,7 +113,6 @@ export default {
 			try {
 				let response = await axios
 				.get(this.baseUrl + "?best", {
-					
                 });
 				this.highestRankedSnippets = response.data;
             }
@@ -139,61 +138,61 @@ export default {
 				console.log('Something went wrong', error);
 			}
 		},
-		likeButton(id){
-			fetch(this.baseUrl, {
-				method: 'POST',
-				body: new URLSearchParams('upvote&id=' + id)
-			})
-			.then((response) => {
-				console.log('response', response)
-			})
-			.catch((error) => {
+		async likeButton(id){
+			try{
+				await axios 
+				.post(this.baseUrl,
+				{
+					upvote: "",
+					id: id
+				});
+			}
+			catch(error){
 				console.log('Something went wrong', error);
-				
-			})
+			}
 			this.getLatest();
 			
 		},
-		reportButton(id){ 
-			fetch(this.baseUrl, {
-				method: 'POST',
-				body: new URLSearchParams('report&id=' + id)
-			})
-			.then((response) => {
-				console.log('response reportButton', response)
-			})
-			.catch((error) => {
+		async reportButton(id){ 
+			try{
+				await axios 
+				.post(this.baseUrl,
+				{
+					report: "",
+					id: id
+				});
+			}
+			catch(error){
 				console.log('Something went wrong', error);
-				
-			})
+			}
 			this.getLatest();
 		},
-		restoreSnippet(id){ 
-			fetch(this.baseUrl, {
-				method: 'POST',
-				body: new URLSearchParams('unreport&id=' + id)
-			})
-			.then((response) => {
-				console.log('response restoreSnippet', response)
-			})
-			.catch((error) => {
+		async restoreSnippet(id){ 
+			try{
+				await axios 
+				.post(this.baseUrl,
+				{
+					unreport: "",
+					id: id
+				});
+			}
+			catch(error){
 				console.log('Something went wrong', error);
-				
-			})
+			}
 			this.getReported();
 		},
-		deleteSnippet(id){
-			fetch(this.baseUrl, {
-				method: 'POST',
-				body: new URLSearchParams('delete&id=' + id)
-			})
-			.then((response) => {
-				console.log('response deletesnippet', response)
-			})
-			.catch((error) => {
+		async deleteSnippet(id){
+			try{
+				await axios 
+				.post(this.baseUrl,
+				{
+					delete: "",
+					id: id
+				});
+			}
+			catch(error){
 				console.log('Something went wrong', error);
-				
-			})
+			}
 			this.getReported();
 		}		
 	},	
@@ -281,6 +280,9 @@ button:disabled{
 	.button{
 		margin: 0 2em 0;
 	}
+	.container{
+	padding-bottom: 8em;
+}
 
 }
 

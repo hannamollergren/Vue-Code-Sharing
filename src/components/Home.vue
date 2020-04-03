@@ -8,6 +8,7 @@
 				<button @click="toLatest"><a href="/home#/content">{{ latestSnippets }}</a></button>
 			</div> 
 
+
 			<div class="rules">
 				<p><span>1.</span> Add a code snippet</p>
 				<p><span>2.</span> Rate others snippets!</p>
@@ -63,29 +64,35 @@ span{
 }
 .rules{
 	background-color:lightgrey;
-	padding: 2em;
+	padding: 2em 2em 2em 0;
 	text-align: left;
 	grid-column: 1/2;
-	margin: 0 0 0 4em;
 
+}
+.rules p{
+	margin: 0 0 0 4em;
+	padding: 0.3em;
 }
 .info{
 	grid-column: 2/4;
 	background-color:lightgrey;
+}
+.infor p{
 	margin: 0 4em 0 0;
 }
 .title{
 	padding: 1em 0 0;
 }
 .undertitle{
-	padding: 0 2em 2em;
+	padding: 0 0 2em 2em;
+	margin: 0 4em 0 0;
 }
 p{
 	padding: 0.3em;
 	margin: 0;
 }
 .love{
-	padding:1em;
+	padding: 0.5em 0 0;
 	font-size: 4em;
 	font-weight: bold;
 	line-height: 2em;
@@ -117,10 +124,12 @@ a{
 }
 @media only screen and (max-width: 450px) {
 .love{
+	padding: 1em;
 	font-size: 3em;
+	line-height: 1.2em;
 }
 .content-container{
-	margin: 0 2em 0;
+	margin: 0 2em 4em;
 }
 .text{
 	padding: 0 1em 0;
