@@ -1,7 +1,7 @@
 <template>
   <div>
 	<header>
-		<a href="/home" class="logo"><h2>{{ title }}</h2></a>
+		<a href="/Vue-Code-Sharing/home" class="logo"><h2>{{ title }}</h2></a>
 		<nav>
 			<ul>
 				<li><router-link to="/content">All Code Snippets</router-link></li>

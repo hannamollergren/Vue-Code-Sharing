@@ -7,7 +7,7 @@
 	</div>
 
 	<div v-if="displayThanks">
-		<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>
+		<p>Thank you for subscribing to Vue Code Sharings newsletter!</p>s
 	</div>
   </div>
 </template>

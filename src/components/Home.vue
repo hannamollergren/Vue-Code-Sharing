@@ -5,7 +5,7 @@
 			<div class="code">
 				<h1 class="love">I LOVE CODE.</h1>
 				<p class="text">Check out the latest code snippets</p> <br>
-				<button @click="toLatest"><a href="/home#/content">{{ latestSnippets }}</a></button>
+				<button @click="toLatest"><a href="/Vue-Code-Sharing/home#/content">{{ latestSnippets }}</a></button>
 			</div> 
 
 
