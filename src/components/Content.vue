@@ -18,7 +18,7 @@
 					<p class="item"><span>{{ snippet.title }}</span></p>
 					<p class="item" id="code">{{ snippet.content }}</p>
 					<span>
-						<img src="../assets/clap.png" alt="clap icon" width="30px" height="30px" @click="likeButton(snippet.id)" class="like">
+						<img src="https://image.flaticon.com/icons/svg/1694/1694871.svg" alt="clap icon" width="30px" height="30px" @click="likeButton(snippet.id)" class="like">
 						<p class="count">{{ snippet.score }}</p>
 						<button @click="reportButton(snippet.id)" class="report">{{ report }}</button>
 					</span>
