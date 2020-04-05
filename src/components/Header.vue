@@ -1,11 +1,11 @@
 <template>
   <div>
 	<header>
-		<a href="/Vue-Code-Sharing/home" class="logo"><h2>{{ title }}</h2></a>
+		<a href="/" class="logo"><h2>{{ title }}</h2></a>
 		<nav>
 			<ul>
-				<li><router-link to="/content">All Code Snippets</router-link></li>
-				<li><router-link to="/create">Create Snippet</router-link></li>
+				<li><router-link to="/content" class="links">All Code Snippets</router-link></li>
+				<li><router-link to="/create" class="links">Create Snippet</router-link></li>
 			</ul>
 			
 		</nav>
@@ -42,8 +42,6 @@ export default {
 		padding-top: 1em;
 		margin-left: 2em;
 		grid-column: 1/2;
-	}
-	.logo:hover{
 		border-bottom: none;
 	}
 	ul{
@@ -70,15 +68,14 @@ export default {
 		padding: 0.8em;
 		text-align: end;
 	}
-	a:hover{
+	.links:hover{
 		border-bottom: 2px solid #2c3e50;
 		color: #2c3e50;
 	}
 	.router-link-active{
 		border-bottom: 2px solid #2c3e50;
 		color: #2c3e50;
-	}
-	
+	}	
 	@media only screen and (max-width: 702px) {
 	header{
 		grid-template-columns: 1fr 3fr 1fr;

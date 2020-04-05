@@ -5,7 +5,10 @@
 			<div class="code">
 				<h1 class="love">I LOVE CODE.</h1>
 				<p class="text">Check out the latest code snippets</p> <br>
-				<button @click="toLatest"><a href="/Vue-Code-Sharing/home#/content">{{ latestSnippets }}</a></button>
+				<ul>
+					<li><router-link to="/content"><p class="button">{{ latestSnippets }}</p></router-link></li>
+				</ul>
+				
 			</div> 
 
 
@@ -55,8 +58,19 @@ span{
 	margin: 0 0 0;
 	gap: 1em;
 }
-
-
+ul{
+	display: inline-block;
+	list-style-type: none;
+	text-align: center;
+	margin: 0;	
+}
+li{
+	display: inline-block;
+}
+a{
+	color: #2c3e50;
+	text-decoration: none;
+}
 .code{
 	background: lightgrey;
 	grid-column: 1/4;
@@ -88,6 +102,7 @@ span{
 	margin: 0 4em 0 0;
 }
 p{
+	display: block;
 	padding: 0.3em;
 	margin: 0;
 }
@@ -98,20 +113,15 @@ p{
 	line-height: 2em;
 }
 
-button{
-	margin: 0em 0 5em;
+.button{
+	margin: 0em 0 3em;
 	padding: 0.5em;
 	border: 1px solid #2c3e50;
 	background-color:lightgrey;
 }
-button:hover{
-	background-color: rgb(201, 200, 200);
-	transition: 0.6s;
-}
-a{
-	text-decoration: none;
-	color: #2c3e50;
-}
+
+
+
 @media only screen and (max-width: 902px) {
 .info{
 	grid-column: 1/4;
